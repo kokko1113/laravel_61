@@ -38,6 +38,7 @@ if [ -f "$directory/.env.local" ]; then
   cp .env.local .env;
   echo -e "${GREEN}.env.localから.envの作成が完了しました。"
 elif [ -f "$directory/.env.example" ]; then
+  cp .env.example .env;
   echo -e "${GREEN}.env.exampleから.envの作成が完了しました。"
 else
   echo -e "${RED}.envの作成に失敗しました。"
