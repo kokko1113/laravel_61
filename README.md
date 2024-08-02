@@ -74,7 +74,7 @@ phpMyAdminからデータベースの管理を行うことが出来ます。
 2. `mysql -u root -p laravel_app`を実行してパスワード入力画面に遷移する。
 3. パスワード`root`を入力し、Enterを押してMariaDBにログインする。
 
-## phpmyAdmin
+## phpmyadmin
 
 phpMyAdminとは、MySQLサーバをウェブブラウザで管理するためのデータベース接続クライアントツールです。
 
