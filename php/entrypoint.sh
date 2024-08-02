@@ -11,9 +11,6 @@ YELLOW="\033[0;33m"
 # プロジェクトルートのフォルダパス
 directory=/var/www/laravel-app
 
-# プロジェクトルートに移動
-# cd "$directory"
-
 # Laravelプロジェクトを作成
 echo -e "${BLUE}Laravelプロジェクトの作成を開始します。"
 if [ -z "$(ls -A $directory)" ]; then
