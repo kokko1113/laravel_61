@@ -10,9 +10,7 @@ services:
     volumes:
       - ./php/php.ini:/usr/local/etc/php/php.ini
       - ./php/000-default.conf:/etc/apache2/sites-available/000-default.conf
-      - ./php/entrypoint.sh:/entrypoint.sh
       - ./src:/var/www/laravel-app
-    entrypoint: /entrypoint.sh
     ports:
       - 8080:80
     depends_on:

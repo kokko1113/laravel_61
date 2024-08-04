@@ -16,6 +16,9 @@ RUN apt-get install sudo zip unzip git -y
 # PHPの拡張機能をインストール
 RUN docker-php-ext-install pdo pdo_mysql
 
+# entrypoint.shをホストからコンテナにコピー
+COPY entrypoint.sh /entrypoint.sh
+
 # Composerのインストール
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 # RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -41,6 +44,9 @@ RUN echo "www-data ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # 作業ディレクトリをプロジェクトルートに設定
 WORKDIR /var/www/laravel-app
+
+# ENTRYPOINTの設定
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 # www-dataに切り替え
 USER www-data
