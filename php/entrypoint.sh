@@ -32,10 +32,10 @@ fi
 # .envファイルの作成
 echo -e "${BLUE}.envの作成を開始します。"
 if [ -f "$directory/.env.local" ]; then
-  cp .env.local .env;
+  sudo cp .env.local .env;
   echo -e "${GREEN}.env.localから.envの作成が完了しました。"
 elif [ -f "$directory/.env.example" ]; then
-  cp .env.example .env;
+  sudo cp .env.example .env;
   echo -e "${GREEN}.env.exampleから.envの作成が完了しました。"
 else
   echo -e "${RED}.envの作成に失敗しました。"
@@ -44,7 +44,7 @@ fi
 # API_KEYの生成
 echo -e "${BLUE}API_KEYの生成を開始します。"
 if [ ! -f .env ] || ! grep -q '^APP_KEY=' .env || [ "$(grep '^APP_KEY=' $directory/.env | cut -d '=' -f2)" = "" ]; then
-  php artisan key:generate
+  sudo php artisan key:generate
   echo -e "${GREEN}API_KEYの生成が完了しました。"
 else
   echo -e "${YELLOW}既にAPI_KEYが生成済みのためAPI_KEYの生成をスキップしました。"
