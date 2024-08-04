@@ -27,7 +27,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: db
+      PMA_HOST: mariadb
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
