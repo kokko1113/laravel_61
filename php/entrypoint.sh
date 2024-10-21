@@ -53,6 +53,7 @@ else
 fi
 
 # データベースのマイグレート
+echo -e "${BLUE}データベースのマイグレートを開始します。"
 php artisan migrate
 echo -e "${GREEN}データベースのマイグレートが完了しました。"
 
