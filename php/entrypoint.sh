@@ -31,7 +31,9 @@ fi
 
 # .envファイルの作成
 echo -e "${BLUE}.envの作成を開始します。"
-if [ -f "$directory/.env.local" ]; then
+if [ -f "$directory/.env" ]; then
+  echo -e "${YELLOW}既に.envが作成済みのため.envの作成をスキップしました。"
+elif [ -f "$directory/.env.local" ]; then
   sudo cp .env.local .env;
   echo -e "${GREEN}.env.localから.envの作成が完了しました。"
 elif [ -f "$directory/.env.example" ]; then
