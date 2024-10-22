@@ -18,22 +18,39 @@ phpMyAdminとMailhogが導入済みのため、それぞれブラウザからデ
 2. `cd docker-laravel-dev`を実行してプロジェクトフォルダに移動する。
 3. `docker compose up -d`を実行してコンテナを起動する。
 
+## サービス一覧
+
+| サービス名                 | 概要                                |
+|---------------------------|-------------------------------------|
+| [php](#php)               | ApacheとComposer                    |
+| [mariadb](#mariadb)       | リレーショナルデータベース            |
+| [phpmyadmin](#phpmyadmin) | ブラウザベースのデータベース管理ツール |
+| [mailhog](#mailhog)       | メール送受信テスト用ツール            |
+
 ## php
-
-ApacheとComposerが使えるコンテナです。
-
-初回起動時にホスト側のsrcフォルダ内が空であれば自動的に最新バージョンのLaravelプロジェクトをセットアップします。
 
 ### Laravel
 
+初回起動時にホスト側のsrcフォルダ内が空であれば自動的に最新バージョンのLaravelプロジェクトをセットアップします。
+
 `http://localhost:8080`でLaravelのサイトにアクセス出来ます。
 
-### artisanコマンド
+### composer & artisan
 
-artisanコマンドを使用するにはphpコンテナ内で実行する必要があります。
+composerやartisanコマンドを使用するにはphpコンテナ内で実行する必要があります。
 
-- `docker compose exec php bash`でphpコンテナ内に入ってから任意のartisanコマンドを実行する。
-- `docker compose exec php php artisan <command>`で任意のartisanコマンドを実行する。
+方法は以下の2通りあります。
+
+1. phpコンテナ内に入ってから任意のコマンドを実行する。
+    ```sh
+    docker compose exec php bash
+    php artisan migrate
+    ```
+
+2. ホスト側からexecコマンドで任意のコマンドを実行する。
+    ```sh
+    docker compose exec php php artisan migrate
+    ```
 
 ### .envファイル
 
@@ -43,15 +60,11 @@ artisanコマンドを使用するにはphpコンテナ内で実行する必要�
 
 .env.localと.env.exampleでは.env.localの方が優先度が高いです。
 
-そのためリモートリポジトリにpushする時は予め.env.localファイルを作成しておくことを推奨します。
-
 また、メールの送受信はmailhogを行うため、メールの設定を自動でmailhogの設定に置き換わります。
 
 ### データベース
 
-LaravelのデータベースのデフォルトはSQLiteになっています。
-
-MariaDBのサービスを使用する場合は以下の設定を.envファイルに記述してください。
+MariaDBを使用する場合は以下の設定を.envファイルに記述してください。
 
 | Key           | Value       |
 |---------------|-------------|
@@ -64,8 +77,6 @@ MariaDBのサービスを使用する場合は以下の設定を.envファイル
 
 ## mariadb
 
-MariaDBとは、MySQLから派生したレーショナルデータベースです
-
 phpMyAdminからデータベースの管理を行うことが出来ます。
 
 直接コマンドでデータベースを操作する場合は下記の手順でMariaDBにログイン出来ます。
@@ -76,13 +87,9 @@ phpMyAdminからデータベースの管理を行うことが出来ます。
 
 ## phpmyadmin
 
-phpMyAdminとは、MySQLサーバをウェブブラウザで管理するためのデータベース接続クライアントツールです。
-
 `http://localhost:8081`でデータベースの管理画面にアクセス出来ます。
 
 ## mailhog
-
-Mailhogとは、開発者向けのメール送受信テスト用ツールです。
 
 phpからのメール送信は全てMailhogにリダイレクトされます。
 
