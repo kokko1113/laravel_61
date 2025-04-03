@@ -35,19 +35,21 @@ phpMyAdminとMailhogが導入済みのため、それぞれブラウザからデ
 
 `http://localhost:8080`でLaravelのサイトにアクセス出来ます。
 
-### composer & artisan
+### Composer & artisan
 
 composerやartisanコマンドを使用するにはphpコンテナ内で実行する必要があります。
 
 方法は以下の2通りあります。
 
 1. phpコンテナ内に入ってから任意のコマンドを実行する。
+
     ```sh
     docker compose exec php bash
     php artisan migrate
     ```
 
 2. ホスト側からexecコマンドで任意のコマンドを実行する。
+
     ```sh
     docker compose exec php php artisan migrate
     ```
@@ -82,7 +84,7 @@ phpMyAdminからデータベースの管理を行うことが出来ます。
 直接コマンドでデータベースを操作する場合は下記の手順でMariaDBにログイン出来ます。
 
 1. `docker compose exec mariadb bash`を実行してmariadbコンテナに入る。
-2. `mysql -u root -p laravel_app`を実行してパスワード入力画面に遷移する。
+2. `mariadb -u root -p laravel_app`を実行してパスワード入力画面に遷移する。
 3. パスワード`root`を入力し、Enterを押してMariaDBにログインする。
 
 ## phpmyadmin
