@@ -1,98 +1,275 @@
-# Docker Laravel Dev
+<div align="center">
 
-このリポジトリはLaravelの開発環境をDockerで構築したものです。
+# 🐋 Docker Laravel Dev
 
-phpMyAdminとMailhogが導入済みのため、それぞれブラウザからデータベースとメールを確認することが出来ます。
+**Laravel開発環境を簡単セットアップ！**
 
-## 必須環境
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Apache](https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
-- Docker (Docker Desktop, Docker Engine)
-- Hyper-V (Windowsのみ)
-- WSL2 (Windowsのみ)
+</div>
 
-※Hyper-VとWSL2はどちらか一方がセットアップされている必要があります。
+---
 
-## セットアップ手順
+## 📋 目次
 
-1. `git clone https://github.com/saitogo555/docker-laravel-dev.git`を実行してリポジトリをクローンする
-2. `cd docker-laravel-dev`を実行してプロジェクトフォルダに移動する。
-3. `docker compose up -d`を実行してコンテナを起動する。
+- [概要](#概要)
+- [含まれるサービス](#含まれるサービス)
+- [必須環境](#必須環境)
+- [クイックスタート](#クイックスタート)
+- [詳細ガイド](#詳細ガイド)
+  - [PHP/Laravel](#phplaravel)
+  - [MariaDB](#mariadb)
+  - [phpMyAdmin](#phpmyadmin)
+  - [MailHog](#mailhog)
+- [設定ファイル](#設定ファイル)
+- [よく使うコマンド](#よく使うコマンド)
+- [アクセスURL](#アクセスurl)
 
-## サービス一覧
+---
 
-| サービス名                 | 概要                                |
-|---------------------------|-------------------------------------|
-| [php](#php)               | ApacheとComposer                    |
-| [mariadb](#mariadb)       | リレーショナルデータベース            |
-| [phpmyadmin](#phpmyadmin) | ブラウザベースのデータベース管理ツール |
-| [mailhog](#mailhog)       | メール送受信テスト用ツール            |
+## ✨ 概要
 
-## php
+このリポジトリは**Laravel開発環境**をDockerで簡単に構築できるテンプレートです。
 
-### Laravel
+**🎯 特徴**
+- **即座に開発開始**: `docker compose up -d` 一発でLaravel環境が立ち上がる
+- **フル機能**: phpMyAdmin、MailHogが標準装備
+- **自動セットアップ**: 初回起動時にLaravelプロジェクトを自動作成
+- **メールテスト**: 送信メールをブラウザで確認可能
 
-初回起動時にホスト側のsrcフォルダ内が空であれば自動的に最新バージョンのLaravelプロジェクトをセットアップします。
+---
 
-`http://localhost:8080`でLaravelのサイトにアクセス出来ます。
+## 📦 含まれるサービス
 
-### Composer & artisan
+<table>
+<thead>
+<tr>
+<th>🛠️ サービス</th>
+<th>📝 説明</th>
+<th>🌐 ポート</th>
+<th>🔗 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PHP/Apache</strong></td>
+<td>Laravel実行環境 + Composer</td>
+<td>8080</td>
+<td><a href="http://localhost:8080">localhost:8080</a></td>
+</tr>
+<tr>
+<td><strong>MariaDB</strong></td>
+<td>リレーショナルデータベース</td>
+<td>3306</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>phpMyAdmin</strong></td>
+<td>データベース管理ツール</td>
+<td>8081</td>
+<td><a href="http://localhost:8081">localhost:8081</a></td>
+</tr>
+<tr>
+<td><strong>MailHog</strong></td>
+<td>メール送受信テストツール</td>
+<td>8025</td>
+<td><a href="http://localhost:8025">localhost:8025</a></td>
+</tr>
+</tbody>
+</table>
 
-composerやartisanコマンドを使用するにはphpコンテナ内で実行する必要があります。
+---
 
-方法は以下の2通りあります。
+## 🔧 必須環境
 
-1. phpコンテナ内に入ってから任意のコマンドを実行する。
+- 🐋 **Docker** (Docker Desktop または Docker Engine)
+- 💻 **Windows の場合**: Hyper-V または WSL2
 
-    ```sh
-    docker compose exec php bash
-    php artisan migrate
-    ```
+> ⚠️ **注意**: WindowsではHyper-VとWSL2のどちらか一方がセットアップされている必要があります。
 
-2. ホスト側からexecコマンドで任意のコマンドを実行する。
+---
 
-    ```sh
-    docker compose exec php php artisan migrate
-    ```
+## 🚀 クイックスタート
 
-### .envファイル
+### 1. リポジトリをクローン
 
-リモートリポジトリからpullしたとき、.envファイルはLaravelプロジェクトに含まれてません。
+```bash
+git clone https://github.com/saitogo555/docker-laravel-dev.git
+cd docker-laravel-dev
+```
 
-コンテナ起動時にsrcフォルダ直下に.env.local又は.env.exampleが存在する場合、それらのファイルから自動的に.envを生成します。
+### 2. コンテナを起動
 
-.env.localと.env.exampleでは.env.localの方が優先度が高いです。
+```bash
+docker compose up -d
+```
 
-また、メールの送受信はmailhogを行うため、メールの設定を自動でmailhogの設定に置き換わります。
+### 3. 完了！
 
-### データベース
+🎉 **Laravel アプリケーション**: http://localhost:8080  
+🔧 **phpMyAdmin**: http://localhost:8081  
+📧 **MailHog**: http://localhost:8025
 
-MariaDBを使用する場合は以下の設定を.envファイルに記述してください。
+---
 
-| Key           | Value       |
-|---------------|-------------|
-| DB_CONNECTION | mysql       |
-| DB_HOST       | mariadb     |
-| DB_PORT       | 3306        |
-| DB_DATABASE   | laravel_app |
-| DB_USERNAME   | root        |
-| DB_PASSWORD   | root        |
+## 📖 詳細ガイド
 
-## mariadb
+### 🐘 PHP/Laravel
 
-phpMyAdminからデータベースの管理を行うことが出来ます。
+#### Laravel自動セットアップ
 
-直接コマンドでデータベースを操作する場合は下記の手順でMariaDBにログイン出来ます。
+初回起動時、`src` フォルダが空の場合、最新のLaravelプロジェクトが自動でセットアップされます。
 
-1. `docker compose exec mariadb bash`を実行してmariadbコンテナに入る。
-2. `mariadb -u root -p laravel_app`を実行してパスワード入力画面に遷移する。
-3. パスワード`root`を入力し、Enterを押してMariaDBにログインする。
+#### Composer & Artisan コマンド
 
-## phpmyadmin
+**方法1: コンテナ内で実行**
+```bash
+docker compose exec php bash
+php artisan migrate
+composer install
+```
 
-`http://localhost:8081`でデータベースの管理画面にアクセス出来ます。
+**方法2: ホストから直接実行**
+```bash
+docker compose exec php php artisan migrate
+docker compose exec php composer install
+```
 
-## mailhog
+#### .envファイル自動生成
 
-phpからのメール送信は全てMailhogにリダイレクトされます。
+コンテナ起動時に以下の優先順位で `.env` ファイルを自動生成：
 
-`http://localhost:8025`でメールの確認画面にアクセス出来ます。
+1. `.env.local` (最優先)
+2. `.env.example`
+
+#### 📧 メール設定
+
+メール設定はMailHog用に自動で設定されます：
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_FROM_ADDRESS="admin@example.com"
+```
+
+---
+
+### 🗄️ MariaDB
+
+#### データベース設定
+
+`.env` ファイルに以下を設定：
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=mariadb
+DB_PORT=3306
+DB_DATABASE=laravel_app
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+#### 💻 直接アクセス
+
+```bash
+# MariaDBコンテナに入る
+docker compose exec mariadb bash
+
+# データベースにログイン
+mariadb -u root -p laravel_app
+# パスワード: root
+```
+
+---
+
+### 🔧 phpMyAdmin
+
+**アクセス**: http://localhost:8081
+
+**ログイン情報**
+- **ユーザー**: `root`
+- **パスワード**: `root`
+
+---
+
+### 📧 MailHog
+
+**アクセス**: http://localhost:8025
+
+PHPから送信されたメールは全てMailHogで受信され、ブラウザで確認できます。
+
+---
+
+## ⚙️ 設定ファイル
+
+```
+docker-laravel-dev/
+├── php/
+│   ├── dockerfile
+│   ├── entrypoint.sh
+│   ├── php.ini
+│   └── 000-default.conf
+├── src/              # Laravelプロジェクト
+├── compose.yml       # Docker Compose設定
+└── README.md
+```
+
+---
+
+## 🔄 よく使うコマンド
+
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>コマンド</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🚀 <strong>コンテナ起動</strong></td>
+<td><code>docker compose up -d</code></td>
+</tr>
+<tr>
+<td>⏹️ <strong>コンテナ停止</strong></td>
+<td><code>docker compose down</code></td>
+</tr>
+<tr>
+<td>🔄 <strong>コンテナ再起動</strong></td>
+<td><code>docker compose restart</code></td>
+</tr>
+<tr>
+<td>📊 <strong>ログ確認</strong></td>
+<td><code>docker compose logs -f</code></td>
+</tr>
+<tr>
+<td>💻 <strong>PHPコンテナに入る</strong></td>
+<td><code>docker compose exec php bash</code></td>
+</tr>
+<tr>
+<td>🗄️ <strong>MariaDBコンテナに入る</strong></td>
+<td><code>docker compose exec mariadb bash</code></td>
+</tr>
+<tr>
+<td>🧹 <strong>完全クリーンアップ</strong></td>
+<td><code>docker compose down -v --rmi all</code></td>
+</tr>
+</tbody>
+</table>
+
+---
+
+## 🔗 アクセスURL
+
+| 🎯 サービス | 🌐 URL | 📝 説明 |
+|------------|--------|--------|
+| **Laravel** | http://localhost:8080 | メインアプリケーション |
+| **phpMyAdmin** | http://localhost:8081 | データベース管理 |
+| **MailHog** | http://localhost:8025 | メール確認 |
+
+---
