@@ -16,6 +16,6 @@
         <p class="text-danger">{{$errors->first()}}</p>
     @endif
     @if (session("message"))
-        <p class="text-danger">{{session("message")}}</p>
+        <p class="text-primary">{{session("message")}}</p>
     @endif
 @endsection

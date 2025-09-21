@@ -42,6 +42,7 @@ class DispatchController extends Controller
             "worker_id.required"=>"エラーが発生しました",
             "memo.required"=>"エラーが発生しました",
         ]);
+        
         foreach ($request->worker_id as $item) {
             Dispatch::create([
                 "event_id"=>$request->event_id,
@@ -50,7 +51,7 @@ class DispatchController extends Controller
             ]);
         }
 
-        return redirect(route("dispatch.create"))->with(["error"=>"派遣情報が登録されました"]);
+        return redirect(route("dispatch.create"))->with(["message"=>"派遣情報が登録されました"]);
     }
 
     /**

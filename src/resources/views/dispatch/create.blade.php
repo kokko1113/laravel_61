@@ -2,9 +2,9 @@
 @section('content')
     新規登録入力画面
 
-    <a href="{{ route('worker.index') }}">戻る</a>
+    <a href="{{ route('dispatch.index') }}">戻る</a>
 
-    <form action="{{ route('worker.store') }}" method="post">
+    <form action="{{ route('dispatch.store') }}" method="post">
         @csrf
         イベント名
         <select name="event_id">
@@ -13,7 +13,7 @@
             @endforeach
         </select>
         人材の氏名
-        <select name="worker_id[]">
+        <select name="worker_id[]" multiple>
             @foreach ($workers as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
             @endforeach
@@ -26,6 +26,6 @@
         <p class="text-danger">{{ $errors->first() }}</p>
     @endif
     @if (session('message'))
-        <p class="text-danger">{{ session('message') }}</p>
+        <p class="text-primary">{{ session('message') }}</p>
     @endif
 @endsection

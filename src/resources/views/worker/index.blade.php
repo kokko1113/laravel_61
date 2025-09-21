@@ -15,8 +15,8 @@
         @foreach ($items as $item)
             <tr>
                 <td>{{$item->name}}</td>
-                <td>{{$item->place}}</td>
-                <td><a href="./" class="btn btn-success">編集</a></td>
+                <td>{{$item->email}}</td>
+                <td><a href="" class="btn btn-success">編集</a></td>
                 <td>
                     <form action="{{route("worker.destroy",$item->id)}}" method="post">
                         @csrf

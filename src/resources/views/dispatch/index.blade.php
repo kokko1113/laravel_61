@@ -16,7 +16,7 @@
             <tr>
                 <td>{{$item->event->name}}</td>
                 <td>{{$item->worker->name}}</td>
-                <td><a href="./" class="btn btn-success">編集</a></td>
+                <td><a href="" class="btn btn-success">編集</a></td>
                 <td>
                     <form action="{{route("dispatch.destroy",$item->id)}}" method="post">
                         @csrf

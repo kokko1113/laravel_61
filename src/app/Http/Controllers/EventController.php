@@ -45,7 +45,7 @@ class EventController extends Controller
             "date"=>$request->date,
         ]);
 
-        return redirect(route("event.create"))->with(["error"=>"イベント情報が登録されました"]);
+        return redirect(route("event.create"))->with(["message"=>"イベント情報が登録されました"]);
     }
 
     /**
@@ -87,7 +87,7 @@ class EventController extends Controller
             "date"=>$request->date,
         ]);
 
-        return redirect(route("event.edit",compact($id)))->with(["error"=>"イベント情報が更新されました"]);
+        return redirect(route("event.edit",$id))->with(["message"=>"イベント情報が更新されました"]);
     }
 
     /**

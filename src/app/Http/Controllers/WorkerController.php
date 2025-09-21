@@ -30,6 +30,7 @@ class WorkerController extends Controller
      */
     public function store(Request $request)
     {
+        // dd("aa");
         $request->validate([
             "name"=>"required",
             "email"=>"required",
@@ -44,12 +45,12 @@ class WorkerController extends Controller
 
         Worker::create([
             "name"=>$request->name,
-            "email"=>$request->place,
-            "password"=>Hash::make($request->date),
-            "memo"=>$request->date,
+            "email"=>$request->email,
+            "password"=>Hash::make($request->password),
+            "memo"=>$request->memo,
         ]);
 
-        return redirect(route("worker.create"))->with(["error"=>"人材情報が登録されました"]);
+        return redirect(route("worker.create"))->with(["message"=>"人材情報が登録されました"]);
     }
 
     /**
